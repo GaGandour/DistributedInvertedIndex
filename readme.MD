@@ -1,0 +1,3 @@
+# DISTRIBUTED INVERTED INDEX
+
+TODO: Escrever documentação
