@@ -11,6 +11,7 @@ type RegisterReply struct {
 }
 
 type RunArgs struct {
-	Id       int
-	FilePath string
+	Id   int
+	set1 []int
+	set2 []int
 }

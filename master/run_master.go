@@ -58,20 +58,40 @@ func RunMaster(hostname string) {
 			}
 		}
 
-		// Schedule workers operations
-		//mapOperations = master.schedule(task, "Worker.RunMap", task.InputFilePathChan)
+		// Split into words
 
-		// Merge the results of multiple II operations into a single result
-		// TODO: change function name
-		//mergeMapLocal(task, mapOperations)
+		// Create chanel of int lists -> retrieval results
+
+		// (FAZER ISSO NO SCHEDULE:)
+		// for loop infinito
+		// 	- tentar pegar n elementos do canal (n=2)
+		// 	- mandar n elementos pra intersect (worker)
+		//  - pega o resultado e poe no canal
+
+		// o resultado final é uma lista de indices
+
+		// pegar o endereco desses indices
+		// for result in resultado:
+		// ii.docs[result]
+
+		// printar os enderecos
 
 		// Schedule intersect operations
 		// TODO: change function names and implement
 		// reduceFilePathChan = fanReduceFilePath(task.NumReduceJobs)
-		// reduceOperations = master.schedule(task, "Worker.RunReduce", reduceFilePathChan)
+		// reduceOperations = master.schedule(task, "Worker.RunIntersect", reduceFilePathChan)
 
 		log.Println("Results found: TODO: print results.")
 		log.Println("Time elapsed: TODO: time elapsed.")
 	}
 	return
 }
+
+// implementar a mensagem de volta do worker / escrever txt (dificil)
+// implementar o schedule (dificil)
+
+// implementar a função de intersect (ez)
+// fazer o master ler o inverted index na inicialização (ez)
+// indexar esses txts (medio)
+
+// fazer o dockerfile (ez) (segundo o copilot)

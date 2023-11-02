@@ -5,12 +5,12 @@ import (
 	"log"
 )
 
-// RPC - RunRetrieval
+// RPC - RunIntersect
 // Run the retrieval operation defined in the task and return when it's done.
-func (worker *Worker) runRetrieval(args *customrpc.RunArgs, _ *struct{}) error {
+func (worker *Worker) RunIntersect(args *customrpc.RunArgs, _ *struct{}) ([]int, error) {
 	// TODO: Implement this method.
 	// Should retrieve the data given the query.
-	return nil
+	return []int{}, nil
 }
 
 // RPC - Done
