@@ -22,8 +22,6 @@ func RunMaster(hostname string) {
 		master       *Master
 		newRpcServer *rpc.Server
 		listener     net.Listener
-		// reduceFilePathChan chan string
-		// mapOperations      int
 	)
 
 	log.Println("Running Master on", hostname)
@@ -47,26 +45,18 @@ func RunMaster(hostname string) {
 
 	master.listener = listener
 
-	// Start MapReduce Operation
-
 	go master.acceptMultipleConnections()
-	go master.handleFailingWorkers()
 
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for scanner.Scan() {
-		// Guarantee that everything is reset
-		// master.Reset()
-
-		start := time.Now()
 		query = scanner.Text()
-
-		log.Println("Query:", query)
+		start := time.Now()
 
 		// Split into words
 		words := strings.Split(query, " ")
-
 		master.numIntersections = len(words) - 1
+
 		// Make retrieval to all words in word
 		master.intersectionChan = make(chan []int, master.numIntersections+1)
 		for _, word := range words {
@@ -74,11 +64,6 @@ func RunMaster(hostname string) {
 		}
 
 		results := master.schedule("Worker.RunIntersect")
-		// (FAZER ISSO NO SCHEDULE:)
-		// for loop infinito
-		// 	- tentar pegar n elementos do canal (n=2)
-		// 	- mandar n elementos pra intersect (worker)
-		//  - pega o resultado e poe no canal
 
 		// o resultado final é uma lista de indices
 		end := time.Now()
@@ -87,13 +72,11 @@ func RunMaster(hostname string) {
 			log.Println(result)
 			// log.Println(master.ii.Docs[result])
 		}
+
 		log.Printf("Time elapsed: %s\n", end.Sub(start))
 		close(master.intersectionChan)
 	}
 }
-
-// implementar a mensagem de volta do worker / escrever txt (dificil)
-// implementar o schedule (dificil)
 
 // fazer o master ler o inverted index na inicialização (ez)
 // indexar esses txts (medio)

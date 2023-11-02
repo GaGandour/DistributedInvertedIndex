@@ -24,8 +24,7 @@ type Master struct {
 	workers      map[int]*RemoteWorker
 	totalWorkers int // Used to generate unique ids for new workers
 
-	idleWorkerChan   chan *RemoteWorker
-	failedWorkerChan chan *RemoteWorker
+	idleWorkerChan chan *RemoteWorker
 
 	// Inverted index
 	ii               invertedindex.InvertedIndex
@@ -33,9 +32,8 @@ type Master struct {
 
 	// Fault Tolerance
 	numIntersections     int
-	failedOperationChan  chan *Operation
+	totalOperations      int
 	successfulOperations int
-	hasMadeFirstTry      bool
 }
 
 type Operation struct {
@@ -51,15 +49,13 @@ func newMaster(address string) (master *Master) {
 	master.address = address
 	master.workers = make(map[int]*RemoteWorker, 0)
 	master.idleWorkerChan = make(chan *RemoteWorker, IDLE_WORKER_BUFFER)
-	master.failedWorkerChan = make(chan *RemoteWorker, IDLE_WORKER_BUFFER)
 	// TODO: BUGA
 	// master.ii = invertedindex.NewInvertedIndex()
 	master.ii = invertedindex.InvertedIndex{}
 	master.totalWorkers = 0
-	master.failedOperationChan = nil
 	master.successfulOperations = 0
+	master.totalOperations = 0
 	master.numIntersections = 0
-	master.hasMadeFirstTry = false
 	return
 }
 
@@ -84,19 +80,6 @@ func (master *Master) acceptMultipleConnections() {
 	}
 
 	log.Println("Stopped accepting connections.")
-}
-
-// handleFailingWorkers will handle workers that fail during an operation.
-func (master *Master) handleFailingWorkers() {
-	// "A ideia é o master retirar o worker falho da lista master.workers e imprimir um aviso na tela"
-	for worker := range master.failedWorkerChan {
-		master.workersMutex.Lock()
-		// Imprime aviso na tela
-		log.Printf("Removing worker %v from master list.\n", worker.id)
-		// Remove o worker da lista de workers
-		delete(master.workers, worker.id)
-		master.workersMutex.Unlock()
-	}
 }
 
 // Handle a single connection until it's done, then closes it.
