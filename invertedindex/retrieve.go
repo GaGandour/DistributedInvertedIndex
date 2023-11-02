@@ -1,5 +1,9 @@
 package invertedindex
 
-func (ii InvertedIndex) retrieve(token string) []int {
-	return ii.token2docs[token]
+import "log"
+
+func (ii InvertedIndex) Retrieve(token string) []int {
+	log.Println("Retrieving token:", token)
+	return []int{1, 2, 3, 4}
+	// return ii.Token2docs[token]
 }

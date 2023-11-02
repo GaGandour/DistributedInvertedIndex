@@ -2,15 +2,16 @@ package worker
 
 import (
 	"dii/customrpc"
+	"dii/invertedindex"
 	"log"
 )
 
 // RPC - RunIntersect
-// Run the retrieval operation defined in the task and return when it's done.
-func (worker *Worker) RunIntersect(args *customrpc.RunArgs, _ *struct{}) ([]int, error) {
-	// TODO: Implement this method.
-	// Should retrieve the data given the query.
-	return []int{}, nil
+func (worker *Worker) RunIntersect(args *customrpc.RunArgs, reply *customrpc.IntersectReply) error {
+	set1 := args.Set1
+	set2 := args.Set2
+	reply.Result = invertedindex.Intersect(set1, set2)
+	return nil
 }
 
 // RPC - Done

@@ -1,6 +1,7 @@
 package master
 
 import (
+	"dii/customrpc"
 	"io"
 	"net/rpc"
 	"time"
@@ -21,7 +22,7 @@ type RemoteWorker struct {
 
 // Call a RemoteWork with the procedure specified in parameters. It will also handle connecting
 // to the server and closing it afterwards.
-func (worker *RemoteWorker) callRemoteWorker(proc string, args interface{}, reply interface{}) error {
+func (worker *RemoteWorker) callRemoteWorker(proc string, args interface{}, reply *customrpc.IntersectReply) error {
 	var (
 		err    error
 		client *rpc.Client
@@ -34,7 +35,6 @@ func (worker *RemoteWorker) callRemoteWorker(proc string, args interface{}, repl
 	}
 
 	defer client.Close()
-
 	err = client.Call(proc, args, reply)
 
 	if err == io.ErrUnexpectedEOF {

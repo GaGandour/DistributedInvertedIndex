@@ -2,8 +2,8 @@ package invertedindex
 
 // InvertedIndex is the data structure that will be used for searching documents
 type InvertedIndex struct {
-	token2docs map[string][]int
-	docs       []string
+	Token2docs map[string][]int
+	Docs       []string
 }
 
 // Task is the exposed struct of the Framework that the calling code should initialize

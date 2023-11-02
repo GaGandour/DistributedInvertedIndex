@@ -1,6 +1,7 @@
 package master
 
 import (
+	"dii/invertedindex"
 	"log"
 	"net"
 	"net/rpc"
@@ -26,17 +27,22 @@ type Master struct {
 	idleWorkerChan   chan *RemoteWorker
 	failedWorkerChan chan *RemoteWorker
 
+	// Inverted index
+	ii               invertedindex.InvertedIndex
+	intersectionChan chan []int
+
 	// Fault Tolerance
-	failedOperationChan     chan *Operation
-	successfulOperations    int
-	totalNumberOfOperations int
-	hasMadeFirstTry         bool
+	numIntersections     int
+	failedOperationChan  chan *Operation
+	successfulOperations int
+	hasMadeFirstTry      bool
 }
 
 type Operation struct {
-	proc     string
-	id       int
-	filePath string
+	// id   int
+	proc string
+	set1 []int
+	set2 []int
 }
 
 // Construct a new Master struct
@@ -46,10 +52,13 @@ func newMaster(address string) (master *Master) {
 	master.workers = make(map[int]*RemoteWorker, 0)
 	master.idleWorkerChan = make(chan *RemoteWorker, IDLE_WORKER_BUFFER)
 	master.failedWorkerChan = make(chan *RemoteWorker, IDLE_WORKER_BUFFER)
+	// TODO: BUGA
+	// master.ii = invertedindex.NewInvertedIndex()
+	master.ii = invertedindex.InvertedIndex{}
 	master.totalWorkers = 0
 	master.failedOperationChan = nil
 	master.successfulOperations = 0
-	master.totalNumberOfOperations = 0
+	master.numIntersections = 0
 	master.hasMadeFirstTry = false
 	return
 }

@@ -11,7 +11,11 @@ type RegisterReply struct {
 }
 
 type RunArgs struct {
-	Id   int
-	set1 []int
-	set2 []int
+	// Id   int
+	Set1 []int
+	Set2 []int
+}
+
+type IntersectReply struct {
+	Result []int
 }

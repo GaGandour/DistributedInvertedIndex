@@ -1,11 +1,13 @@
 package master
 
 import (
-	"fmt"
-	"io"
+	"bufio"
 	"log"
 	"net"
 	"net/rpc"
+	"os"
+	"strings"
+	"time"
 )
 
 // RunMaster will start a master node on the map reduce operations.
@@ -50,18 +52,28 @@ func RunMaster(hostname string) {
 	go master.acceptMultipleConnections()
 	go master.handleFailingWorkers()
 
-	for {
-		_, err := fmt.Scanln(&query)
-		if err != nil {
-			if err == io.EOF {
-				break
-			}
-		}
+	scanner := bufio.NewScanner(os.Stdin)
+
+	for scanner.Scan() {
+		// Guarantee that everything is reset
+		// master.Reset()
+
+		start := time.Now()
+		query = scanner.Text()
+
+		log.Println("Query:", query)
 
 		// Split into words
+		words := strings.Split(query, " ")
 
-		// Create chanel of int lists -> retrieval results
+		master.numIntersections = len(words) - 1
+		// Make retrieval to all words in word
+		master.intersectionChan = make(chan []int, master.numIntersections+1)
+		for _, word := range words {
+			master.intersectionChan <- master.ii.Retrieve(word)
+		}
 
+		results := master.schedule("Worker.RunIntersect")
 		// (FAZER ISSO NO SCHEDULE:)
 		// for loop infinito
 		// 	- tentar pegar n elementos do canal (n=2)
@@ -69,28 +81,20 @@ func RunMaster(hostname string) {
 		//  - pega o resultado e poe no canal
 
 		// o resultado final é uma lista de indices
-
-		// pegar o endereco desses indices
-		// for result in resultado:
-		// ii.docs[result]
-
-		// printar os enderecos
-
-		// Schedule intersect operations
-		// TODO: change function names and implement
-		// reduceFilePathChan = fanReduceFilePath(task.NumReduceJobs)
-		// reduceOperations = master.schedule(task, "Worker.RunIntersect", reduceFilePathChan)
-
-		log.Println("Results found: TODO: print results.")
-		log.Println("Time elapsed: TODO: time elapsed.")
+		end := time.Now()
+		log.Println("Results found:")
+		for result := range results {
+			log.Println(result)
+			// log.Println(master.ii.Docs[result])
+		}
+		log.Printf("Time elapsed: %s\n", end.Sub(start))
+		close(master.intersectionChan)
 	}
-	return
 }
 
 // implementar a mensagem de volta do worker / escrever txt (dificil)
 // implementar o schedule (dificil)
 
-// implementar a função de intersect (ez)
 // fazer o master ler o inverted index na inicialização (ez)
 // indexar esses txts (medio)
 
