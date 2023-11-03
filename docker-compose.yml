@@ -5,26 +5,17 @@ services:
     command: ["./dii", "-type", "master", "-addr", "dii-master"]
     tty: true
     stdin_open: true
-    networks:
-      - my-network
     ports:
       - "5000:5000"
 
   worker-1:
     image: dii
     command: ["./dii", "-type", "worker", "-addr", "worker-1", "-port", "50001", "-master", "dii-master:5000"]
-    networks:
-      - my-network
     ports:
       - "50001:50001"
 
   worker-2:
     image: dii
     command: ["./dii", "-type", "worker", "-addr", "worker-2", "-port", "50002", "-master", "dii-master:5000"]
-    networks:
-      - my-network
     ports:
       - "50002:50002"
-
-networks:
-  my-network:

@@ -1,3 +1,2 @@
-docker stop $(docker ps -a -q)
-docker container prune
+cd ..
 docker-compose up -d && docker attach dii-dii-master-1
