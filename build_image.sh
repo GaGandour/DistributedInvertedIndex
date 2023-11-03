@@ -1,1 +1,1 @@
-sudo docker build -t dii .
+docker build -t dii .
