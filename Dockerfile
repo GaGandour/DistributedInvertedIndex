@@ -10,5 +10,10 @@ COPY . .
 # Build the Go application
 RUN go build -o dii .
 
+# Expose the ports
+EXPOSE 5000
+EXPOSE 50001
+EXPOSE 50002
+
 # Run the application
 CMD ["./dii"]
