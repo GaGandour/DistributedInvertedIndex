@@ -2,9 +2,8 @@ package master
 
 import (
 	"dii/customrpc"
-	"io"
+	"fmt"
 	"net/rpc"
-	"time"
 )
 
 type workerStatus string
@@ -37,18 +36,16 @@ func (worker *RemoteWorker) callRemoteWorker(proc string, args interface{}, repl
 	defer client.Close()
 	err = client.Call(proc, args, reply)
 
-	if err == io.ErrUnexpectedEOF {
-		time.Sleep(time.Second)
+	if err != nil {
 		var tmpClient *rpc.Client
 		tmpClient, err = rpc.Dial("tcp", worker.hostname)
-
-		if err == nil {
-			// Ignore Unexpected EOF error
-			tmpClient.Close()
-			return nil
+		defer tmpClient.Close()
+		if err != nil {
+			return err
 		}
-		return err
-	} else if err != nil {
+
+		err = tmpClient.Call(proc, args, reply)
+
 		return err
 	}
 

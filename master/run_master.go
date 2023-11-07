@@ -68,9 +68,9 @@ func RunMaster(hostname string) {
 		// o resultado final é uma lista de indices
 		end := time.Now()
 		log.Println("Results found:")
-		for result := range results {
-			log.Println(result)
-			// log.Println(master.ii.Docs[result])
+		for _, result := range results {
+			// log.Println(result)
+			log.Println(master.ii.Docs[result])
 		}
 
 		log.Printf("Time elapsed: %s\n", end.Sub(start))
