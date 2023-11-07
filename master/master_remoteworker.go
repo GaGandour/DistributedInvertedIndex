@@ -2,7 +2,6 @@ package master
 
 import (
 	"dii/customrpc"
-	"fmt"
 	"net/rpc"
 )
 
