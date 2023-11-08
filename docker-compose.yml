@@ -2,6 +2,7 @@ version: '3'
 services:
   dii-master:
     image: dii
+    container_name: dii-master
     command: ["./dii", "-type", "master", "-addr", "dii-master"]
     tty: true
     stdin_open: true
@@ -10,12 +11,8 @@ services:
 
   worker-1:
     image: dii
+    container_name: worker-1
     command: ["./dii", "-type", "worker", "-addr", "worker-1", "-port", "50001", "-master", "dii-master:5000"]
     ports:
       - "50001:50001"
 
-  worker-2:
-    image: dii
-    command: ["./dii", "-type", "worker", "-addr", "worker-2", "-port", "50002", "-master", "dii-master:5000"]
-    ports:
-      - "50002:50002"

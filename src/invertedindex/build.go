@@ -1,24 +1,21 @@
 package invertedindex
 
-
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"os"
-	"encoding/json"
-	"io/ioutil"
 	"path/filepath"
 	"strings"
 )
 
-
 // Builds inverted index with txt docs in a given path
-func BuildInvertedIndex (path string)(ii InvertedIndex){
+func BuildInvertedIndex(path string) (ii InvertedIndex) {
 	ii = InvertedIndex{}
 	ii.Token2docs = make(map[string][]int)
 
 	// Walk through the directory and its subdirectories
-	err := filepath.Walk(path, func(	filePath string, info os.FileInfo, err error) error {
+	err := filepath.Walk(path, func(filePath string, info os.FileInfo, err error) error {
 		if err != nil {
 			fmt.Println(err)
 			return err
@@ -66,7 +63,6 @@ func BuildInvertedIndex (path string)(ii InvertedIndex){
 	return ii
 }
 
-
 func SaveInvertedIndex(ii InvertedIndex, filePath string) error {
 	jsonData, err := json.Marshal(ii)
 	if err != nil {
@@ -74,7 +70,7 @@ func SaveInvertedIndex(ii InvertedIndex, filePath string) error {
 		return err
 	}
 
-	err = ioutil.WriteFile(filePath, jsonData, 0644)
+	err = os.WriteFile(filePath, jsonData, 0644)
 	if err != nil {
 		fmt.Println("Error writing to file:", err)
 		return err
@@ -86,7 +82,7 @@ func SaveInvertedIndex(ii InvertedIndex, filePath string) error {
 
 // Load the inverted index from a JSON file
 func LoadInvertedIndex(filePath string) (InvertedIndex, error) {
-	jsonData, err := ioutil.ReadFile(filePath)
+	jsonData, err := os.ReadFile(filePath)
 	if err != nil {
 		fmt.Println("Error reading file:", err)
 		return InvertedIndex{}, err
@@ -102,7 +98,3 @@ func LoadInvertedIndex(filePath string) (InvertedIndex, error) {
 	fmt.Println("Inverted index loaded from", filePath)
 	return ii, nil
 }
-
-
-
-
