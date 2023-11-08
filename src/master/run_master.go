@@ -67,12 +67,14 @@ func RunMaster(hostname string) {
 
 		// o resultado final é uma lista de indices
 		end := time.Now()
-		log.Println("Results found:")
-		for _, result := range results {
-			// log.Println(result)
-			log.Println(master.ii.Docs[result])
+		if len(results) > 0{
+			log.Println("Results found:")
+			for _, result := range results {
+				log.Println(master.ii.Docs[result])
+			}
+		}else {
+			log.Println("No results found")
 		}
-
 		log.Printf("Time elapsed: %s\n", end.Sub(start))
 		close(master.intersectionChan)
 	}
