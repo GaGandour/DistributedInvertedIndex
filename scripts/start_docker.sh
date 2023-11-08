@@ -4,7 +4,7 @@ if [ -z "$1" ]
     echo "Usage: ./start_docker.sh <number of workers>"
     exit 1
 fi
-python write_docker_compose.py $1 > ../docker-compose.yml
+python3 write_docker_compose.py $1 > ../docker-compose.yml
 cd ..
 docker-compose -f docker-compose.yml up -d
 echo "Starting DII with $1 workers"
