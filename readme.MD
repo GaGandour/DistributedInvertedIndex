@@ -30,7 +30,7 @@ sh scrape_documents.sh 20
 
 The number 20 is related to the ammount of documents we will download. It can be any positive integer. The greater the number, more data will be downloaded.
 
-This script downloads files from `https://www.gutenberg.org` and splits them into smaller files.
+This script downloads files from [https://www.gutenberg.org](https://www.gutenberg.org) and splits them into smaller files.
 
 ### Third step: build docker image.
 
