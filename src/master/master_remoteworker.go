@@ -38,10 +38,10 @@ func (worker *RemoteWorker) callRemoteWorker(proc string, args interface{}, repl
 	for err != nil {
 		var tmpClient *rpc.Client
 		tmpClient, err = rpc.Dial("tcp", worker.hostname)
-		defer tmpClient.Close()
 		if err != nil {
 			return err
 		}
+		defer tmpClient.Close()
 
 		err = tmpClient.Call(proc, args, reply)
 
