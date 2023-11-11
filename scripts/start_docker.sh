@@ -9,4 +9,6 @@ cd ..
 docker-compose -f docker-compose.yml up -d
 echo "Starting DII with $1 workers"
 docker attach dii-master
-docker stop $(docker ps -a -q)
+echo "Stopping DII containers"
+cd scripts
+./stop_docker.sh

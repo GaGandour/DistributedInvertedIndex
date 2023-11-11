@@ -11,7 +11,7 @@ import (
 const (
 	IDLE_WORKER_BUFFER     = 100
 	RETRY_OPERATION_BUFFER = 100
-	DOCS_PATH              = "books/pg"
+	DOCS_PATH              = "../books/pg"
 )
 
 type Master struct {

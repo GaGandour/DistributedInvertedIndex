@@ -5,7 +5,8 @@ FROM golang:1.20
 WORKDIR /app
 
 # Copy the local code to the container
-COPY ./src .
+COPY ./src /app
+COPY ./books /books
 
 # Build the Go application
 RUN go build -o dii .
