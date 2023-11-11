@@ -52,7 +52,7 @@ The number 4 is the number of workers that will be run. It can be any positive i
 
 ## Contributors:
 
-+ Gabriel Gandour @gagandour
-+ Emmanuel da Silva Dias @emmanuelsdias
-+ Marcelo Buga @BugaM
-+ Gabriel Ribeiro Pardini @gabrielribpar
++ Gabriel Gandour [@GaGandour](https://github.com/GaGandour)
++ Emmanuel da Silva Dias [@emmanuelsdias](https://github.com/emmanuelsdias)
++ Marcelo Buga [@BugaM](https://github.com/BugaM)
++ Gabriel Ribeiro Pardini [@gabrielribpar](https://github.com/gabrielribpar)
