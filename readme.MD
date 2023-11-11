@@ -48,11 +48,11 @@ sh start_docker 4
 
 The number 4 is the number of workers that will be run. It can be any positive integer. 
 
-*WARNING*: be careful with the number of workers you use. If your machine is not powerful, to many workers could cause a problem. Using 3 workers is a safe approach.
+**WARNING**: be careful with the number of workers you use. If your machine is not powerful, to many workers could cause a problem. Using 3 workers is a safe approach.
 
 ## Contributors:
 
-Gabriel Gandour <@gagandour>
-Emmanuel da Silva Dias <@emmanuelsdias>
-Marcelo Buga <@BugaM>
-Gabriel Ribeiro Pardini <@gabrielribpar>
++ Gabriel Gandour @gagandour
++ Emmanuel da Silva Dias @emmanuelsdias
++ Marcelo Buga @BugaM
++ Gabriel Ribeiro Pardini @gabrielribpar
