@@ -2,7 +2,11 @@
 
 ## What it is
 
-TODO
+An Inverted Index is a data structure commonly used for search engines. In this problem, we have many documents (in our case, txt files), and we want to know which documents have a certain set of strings.
+
+The inverted index is basically a hash table that points a string to a list of documents, and when we want to query a set of strings (called tokens), we compute the intersection of all lists of documents that each token points to.
+
+In this repository, we try to distribute this intersection computing step to have a faster retrieval. This is done by running multiple processes which communicate through RPC.
 
 ## How to use it
 
