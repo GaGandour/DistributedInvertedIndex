@@ -4,9 +4,9 @@ def create_worker(worker_id: int) -> str:
     return f"""  worker-{worker_id}:
     image: dii
     container_name: worker-{worker_id}
-    command: ["./dii", "-type", "worker", "-addr", "worker-{worker_id}", "-port", "5000{worker_id}", "-master", "dii-master:5000"]
+    command: ["./dii", "-type", "worker", "-addr", "worker-{worker_id}", "-port", "500{worker_id:02d}", "-master", "dii-master:5000"]
     ports:
-      - "5000{worker_id}:5000{worker_id}"
+      - "500{worker_id:02d}:500{worker_id:02d}"
 """
 
 def create_master() -> str:
