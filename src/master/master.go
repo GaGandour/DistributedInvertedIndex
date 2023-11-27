@@ -50,9 +50,7 @@ func newMaster(address string) (master *Master) {
 	master.address = address
 	master.workers = make(map[int]*RemoteWorker, 0)
 	master.idleWorkerChan = make(chan *RemoteWorker, IDLE_WORKER_BUFFER)
-	// TODO: BUGA
 	master.ii = invertedindex.BuildInvertedIndex(DOCS_PATH)
-	// master.ii = invertedindex.InvertedIndex{}
 	master.totalWorkers = 0
 	master.successfulOperations = 0
 	master.totalOperations = 0
